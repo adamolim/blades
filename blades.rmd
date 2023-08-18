@@ -1,0 +1,13 @@
+---
+title: "Blades"
+subtitle: <h3 style="font-style:normal">Comparing fat blades vs. comp blades</h3>
+author: "[Michele Adamoli BFS](https://github.com/adamolim)"
+date: "Last update: `r Sys.time()`"
+output:
+  bookdown::html_document2:
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    code_folding: hide
+    number_sections: true
+---
