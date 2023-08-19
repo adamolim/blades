@@ -1,0 +1,49 @@
+Session Information:,,,,Device Information:,,,,Oarlock Information:,,,,Oarlock Settings:
+
+Name:,200M,,,Name:,SpdCoach 2739060,,,Firmware:,---,,,Boat ID:,---
+Start Time:,08/17/2023 09:18,,,Model:,SpeedCoach GPS Pro,,,,,,,Seat Number:,---
+Type:,Interval,,,Serial:,2739060,,,,,,,Port Starboard:,---
+System of Units:,Meters/Split500,,,Firmware Version:,2.23,,,,,,,Oar Length:,---
+Speed Input:,Impeller,,,Profile Version:,0.03,,,,,,,Inboard Length:,---
+,,,,Hardware Version:,Rev 11,,,,,,,,
+,,,,LiNK Version:,2.1.68,,,,,,,,
+
+
+Session Summary:
+
+Total Intervals,Total Distance (GPS),Total Distance (IMP),Total Elapsed Time,Avg Split (GPS),Avg Speed (GPS),Avg Split (IMP),Avg Speed (IMP),Avg Stroke Rate,Total Strokes,Distance/Stroke (GPS),Distance/Stroke (IMP),Avg Heart Rate,Avg Power,Avg Catch,Avg Slip,Avg Finish,Avg Wash,Avg Force Avg,Avg Work,Avg Force Max,Avg Max Force Angle,Start GPS Lat.,Start GPS Lon.
+(Interval),(Meters),(Meters),(HH:MM:SS.tenths),(/500),(M/S),(/500),(M/S),(SPM),(Strokes),(Meters),(Meters),(BPM),(Watts),(Degrees),(Degrees),(Degrees),(Degrees),(Newtons),(Joules),(Newtons),(Degrees),(Degrees),(Degrees)
+1,184.7,200.1,00:00:55.9,00:02:28.9,3.36,00:02:20.1,3.57,21.0,19,9.7,10.5,132.0,---,---,---,---,---,---,---,---,---,46.9617624,7.3786256
+
+
+Interval Summaries:
+
+Interval,Total Distance (GPS),Total Distance (IMP),Total Elapsed Time,Avg Split (GPS),Avg Speed (GPS),Avg Split (IMP),Avg Speed (IMP),Avg Stroke Rate,Total Strokes,Distance/Stroke (GPS),Distance/Stroke (IMP),Avg Heart Rate,Avg Power,Avg Catch,Avg Slip,Avg Finish,Avg Wash,Avg Force Avg,Avg Work,Avg Force Max,Avg Max Force Angle,Start GPS Lat.,Start GPS Lon.
+(Interval),(Meters),(Meters),(HH:MM:SS.tenths),(/500),(M/S),(/500),(M/S),(SPM),(Strokes),(Meters),(Meters),(BPM),(Watts),(Degrees),(Degrees),(Degrees),(Degrees),(Newtons),(Joules),(Newtons),(Degrees),(Degrees),(Degrees)
+1,184.7,200.1,00:00:55.9,00:02:28.8,3.36,00:02:20.1,3.57,21.0,19,9.7,10.5,133.0,---,---,---,---,---,---,---,---,---,46.9617624,7.3786256
+
+
+
+Per-Stroke Data:
+
+Interval,Distance (GPS),Distance (IMP),Elapsed Time,Split (GPS),Speed (GPS),Split (IMP),Speed (IMP),Stroke Rate,Total Strokes,Distance/Stroke (GPS),Distance/Stroke (IMP),Heart Rate,Power,Catch,Slip,Finish,Wash,Force Avg,Work,Force Max,Max Force Angle,GPS Lat.,GPS Lon.
+(Interval),(Meters),(Meters),(HH:MM:SS.tenths),(/500),(M/S),(/500),(M/S),(SPM),(Strokes),(Meters),(Meters),(BPM),(Watts),(Degrees),(Degrees),(Degrees),(Degrees),(Newtons),(Joules),(Newtons),(Degrees),(Degrees),(Degrees)
+1,6.2,6.9,00:00:02.0,00:02:40.8,3.11,00:02:21.2,3.54,22.5,1,6.2,6.9,122,---,---,---,---,---,---,---,---,---,46.9618113,7.3786649
+1,14.8,16.8,00:00:04.8,00:02:39.2,3.14,00:02:21.2,3.54,22.5,2,8.6,9.9,123,---,---,---,---,---,---,---,---,---,46.9618810,7.3787147
+1,23.9,26.7,00:00:07.6,00:02:36.7,3.19,00:02:20.8,3.55,20.5,3,9.0,10.0,126,---,---,---,---,---,---,---,---,---,46.9619549,7.3787634
+1,33.6,37.5,00:00:10.6,00:02:36.2,3.20,00:02:19.7,3.58,20.5,4,9.7,10.7,126,---,---,---,---,---,---,---,---,---,46.9620360,7.3788111
+1,42.5,46.9,00:00:13.2,00:02:36.2,3.20,00:02:20.1,3.57,21.5,5,8.9,9.4,127,---,---,---,---,---,---,---,---,---,46.9621107,7.3788522
+1,52.3,57.5,00:00:16.2,00:02:33.8,3.25,00:02:20.1,3.57,20.5,6,9.8,10.6,129,---,---,---,---,---,---,---,---,---,46.9621939,7.3788941
+1,62.5,68.1,00:00:19.2,00:02:31.1,3.31,00:02:22.0,3.52,19.5,7,10.2,10.7,131,---,---,---,---,---,---,---,---,---,46.9622814,7.3789349
+1,72.3,78.7,00:00:22.2,00:02:30.6,3.32,00:02:20.4,3.56,20.5,8,9.8,10.6,132,---,---,---,---,---,---,---,---,---,46.9623666,7.3789690
+1,81.6,89.0,00:00:25.1,00:02:32.4,3.28,00:02:20.8,3.55,20.5,9,9.3,10.3,133,---,---,---,---,---,---,---,---,---,46.9624472,7.3790000
+1,90.5,98.8,00:00:27.8,00:02:32.4,3.28,00:02:22.0,3.52,21.5,10,8.9,9.8,134,---,---,---,---,---,---,---,---,---,46.9625242,7.3790321
+1,100.5,109.5,00:00:30.8,00:02:29.7,3.34,00:02:18.5,3.61,20.5,11,9.9,10.7,137,---,---,---,---,---,---,---,---,---,46.9626109,7.3790652
+1,110.7,120.3,00:00:33.8,00:02:28.4,3.37,00:02:18.9,3.60,21.0,12,10.2,10.8,136,---,---,---,---,---,---,---,---,---,46.9627004,7.3790961
+1,120.5,130.8,00:00:36.8,00:02:25.3,3.44,00:02:22.9,3.50,20.0,13,9.8,10.5,138,---,---,---,---,---,---,---,---,---,46.9627857,7.3791259
+1,129.3,140.0,00:00:39.4,00:02:28.4,3.37,00:02:22.0,3.52,20.5,14,8.8,9.2,137,---,---,---,---,---,---,---,---,---,46.9628628,7.3791536
+1,139.2,150.4,00:00:42.4,00:02:34.8,3.23,00:02:22.9,3.50,21.0,15,9.9,10.4,138,---,---,---,---,---,---,---,---,---,46.9629489,7.3791859
+1,148.7,160.4,00:00:45.2,00:02:35.8,3.21,00:02:21.2,3.54,21.0,16,9.5,10.0,139,---,---,---,---,---,---,---,---,---,46.9630310,7.3792180
+1,157.8,170.4,00:00:48.0,00:02:35.8,3.21,00:02:19.3,3.59,21.0,17,9.1,10.0,139,---,---,---,---,---,---,---,---,---,46.9631110,7.3792470
+1,168.0,181.4,00:00:51.0,00:02:33.4,3.26,00:02:16.6,3.66,20.5,18,10.2,11.0,139,---,---,---,---,---,---,---,---,---,46.9631991,7.3792812
+1,177.2,191.5,00:00:53.8,00:02:32.4,3.28,00:02:18.5,3.61,20.5,19,9.2,10.1,140,---,---,---,---,---,---,---,---,---,46.9632792,7.3793118

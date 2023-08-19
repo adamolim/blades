@@ -1,7 +1,7 @@
 ---
-title: "Blades"
-subtitle: <h3 style="font-style:normal">Comparing fat blades vs. comp blades</h3>
-author: "[Michele Adamoli BFS](https://github.com/adamolim)"
+title: "Blades comparisons"
+subtitle: <h3 style="font-style:normal">Fat blades vs. comp blades</h3>
+author: "[Michele Adamoli](https://github.com/adamolim)"
 date: "Last update: `r Sys.time()`"
 output:
   bookdown::html_document2:
@@ -10,4 +10,299 @@ output:
     toc_float: yes
     code_folding: hide
     number_sections: true
+bibliography: input/literature/bibliography.bib
 ---
+
+```{r}
+
+# Libraries
+
+library(pacman)
+
+p_load("tidyverse",
+       "lubridate",
+       "janitor",
+       "DT",
+       "knitr",
+       "plotly")
+
+# Options R markdown
+
+opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,  results = 'markup')
+
+
+```
+
+
+# Introduction
+
+The aim of this small study is to try to detect a potential efficiency difference between fat blades (Fat) and compact blades (Comp). Because Fat have a bigger surface than Comp, we expected Fat to have less slippage and to be more efficient. Similar but more elaborated studies have been conducted by @blade_type_3, @blade_type_1 and @blade_type_2, 
+
+For instance in @blade_type_3 the conclusion was that Fat are "*the most efficient between the three types tested*" but "*they were qualitatively the most uncomfortable to row*".
+
+
+# Method
+
+Rowing speed and heart rate of the rower have been measured for 32 distance intervals (200 meters each). Each interval has been preceded by 30 seconds preparation in order to get used to the oars and in order to reach the aimed speed and stroke rate at the beginning of the measurement.
+
+* Total lengths and inboard length are the same for Comp and Fat, both oars are skinny type;^[More precisely: 283.5 cm total length Fat and 284.0 cm total length for Comp. It has not been possible to set the total length exactly equal. For both Comp and Fat we have chosen a short inboard (84 cm) in order to allow the rower to reach an appropriate stroke length and hands' height due to the given boat's setting. Total lengths and inboard lengths have been kept the same during the entire study]
+
+* Strokes per minutes have been kept constant at about 20;
+
+* Blades have been regularly changed: one series (4 intervals) with Comp and one series (4 intervals) with Fat;
+
+* The pace (minutes per 500 minutes) has been kept about constant at each series: one series at 2:40, two series at 2:30 and one series at 2:20;
+
+* The speed (resp. the pace) has been measured with an impeller in order to avoid any measurement distortion due to the current of river.
+
+The 32 intervals have been accomplished by the same rower.
+
+
+```{r bladespic, fig.cap='Oars used for this study'}
+
+include_graphics("img/IMG_20230816_103021.jpg")
+
+```
+
+
+
+# Data
+
+Data have been collected with NK Speed Coach. The speed has been measured via an impeller (water speed). This device has been recently re-calibrated and neutralize the effect of the current on the speed relative to the earth crust (gps speed). Data have been collected on two different days. The first day was slightly windy but the measurements have been taken in both directions.^[The wind of the first day had an impact on the variability of the measurement.]
+
+```{r}
+
+
+vec_data <- paste0("input/", list.files("input/", pattern = "SpdCoach"))
+
+# Dummy tibble for data per stroke   
+
+
+vec_name_per_stroke <- c(
+    "interval" ,
+    "distance_gps" ,
+    "distance_imp" ,
+    "elapsed_time" ,
+    "split_gps" ,
+    "speed_gps" ,
+    "split_imp" ,
+    "speed_imp" ,
+    "stroke_rate" ,
+    "total_strokes" ,
+    "distance_stroke_gps",
+    "distance_stroke_imp",
+    "heart_rate",
+    "power" ,
+    "catch" ,
+    "slip" ,
+    "finish" ,
+    "wash" ,
+    "force_avg" ,
+    "work" ,
+    "force_max" ,
+    "max_force_angle" ,
+    "gps_lat" ,
+    "gps_lon",
+    "id"
+)
+
+vec_names <- setNames(rep("", length(vec_name_per_stroke)), vec_name_per_stroke)
+data_stroke_0 <- as_tibble(t(vec_names))[0, ]
+
+# Dummy for summary
+
+vec_name_per_workout <- c(
+    "interval" ,
+    "total_distance_gps",
+    "total_distance_imp",
+    "total_elapsed_time",
+    "avg_split_gps" ,
+    "avg_speed_gps" ,
+    "avg_split_imp" ,
+    "avg_speed_imp" ,
+    "avg_stroke_rate" ,
+    "total_strokes" ,
+    "distance_stroke_gps",
+    "distance_stroke_imp",
+    "avg_heart_rate" ,
+    "avg_power" ,
+    "avg_catch" ,
+    "avg_slip" ,
+    "avg_finish" ,
+    "avg_wash" ,
+    "avg_force_avg" ,
+    "avg_work" ,
+    "avg_force_max" ,
+    "avg_max_force_angle",
+    "start_gps_lat" ,
+    "start_gps_lon",
+    "id"
+)
+
+vec_names <- setNames(rep("", length(vec_name_per_workout)), vec_name_per_workout)
+data_sum_0 <- as_tibble(t(vec_names))[0, ]
+
+# Loop
+
+for (i in 1:length(vec_data)) {
+    
+    # Metadata
+    
+    meta_data <- read_csv(vec_data[i], col_names = FALSE)
+    workout <- meta_data[2, 2] %>% pull()
+    id <- meta_data[3, 2] %>% pull()
+    
+    time_m <- str_sub(id, 15, 16)
+    
+    time_h <- str_sub(id, 12, 13)
+    
+    time <- if (as.numeric(time_h) > 12) {
+        paste0(str_pad(string = as.character(as.numeric(time_h) - 12),
+                       width = 2, side = "left", pad = "0"), time_m, "PM")
+    } else if (time_h == "12") {
+        paste0(12, time_m, "PM")
+    } else {
+        paste0(time_h, time_m, "AM")
+    }
+
+    time_mm <- str_sub(id, 1,2)
+    time_dd <- str_sub(id, 4,5)
+    time_yy <- str_sub(id, 7,10)
+    
+    date <- paste0(time_dd, "/", time_mm, "/", time_yy)
+    
+    # Data per stroke
+    
+    data_stroke <- read_delim(vec_data[i], 
+                              delim = ",", 
+                              col_names = TRUE, 
+                              skip = 28,
+                              col_type = paste(rep("c", 27), collapse = "")) %>% 
+        clean_names() %>% 
+        filter(interval != "(Interval)") %>% 
+        mutate(id = id) %>% 
+        mutate(date = date) %>% 
+        mutate(time = time)  %>% 
+        mutate(workout = workout)
+        
+    # Data summary 
+    
+    data_sum <- read_delim(vec_data[i], delim = ",",
+                           col_names = TRUE,
+                           skip = 20,
+                           col_type = paste(rep("c", 27), collapse = "")) %>% 
+        clean_names()
+    
+    n_interval <- which(data_sum$interval == "Per-Stroke Data:")
+    
+    data_sum <- data_sum[2:(n_interval - 1),] %>% 
+       mutate(id = id) %>% 
+       mutate(date = date) %>% 
+       mutate(time = time) %>% 
+       mutate(workout = workout)
+        
+    # Finalise
+    
+    data_stroke_0 <- bind_rows(data_stroke , data_stroke_0) 
+    data_sum_0 <- bind_rows(data_sum , data_sum_0)
+    
+}
+
+# Complementary Data
+
+complement_data <- read_csv2("input/complementary_data.csv") %>%
+  mutate(id_1 = str_sub(DATE, 1, 4)) %>%
+  mutate(id_2 = str_sub(DATE, 5, 6)) %>%
+  mutate(id_3 = str_sub(DATE, 7, 8)) %>%
+  mutate(id_4 = str_sub(TIME, 1, 2)) %>%
+  mutate(id_5 = str_sub(TIME, 3, 4)) %>% 
+  mutate(id = paste0(id_2, "/", id_3, "/", id_1, " ", id_4, ":", id_5)) %>% 
+  select(BLADE, id, DIRECTION_TO) %>% 
+  rename(blade_type = BLADE) %>% 
+  rename(boat_direction = DIRECTION_TO)
+  
+# Join data and complementary data on blades type
+
+d_analysis <- data_sum_0 %>%
+  full_join(complement_data, by = join_by(id)) %>% 
+  mutate(avg_speed_imp = as.numeric(avg_speed_imp)) %>% 
+  mutate(avg_heart_rate = as.numeric(avg_heart_rate)) %>%
+  select(id, avg_speed_imp, avg_heart_rate, blade_type, boat_direction)
+
+# Table 
+
+d_analysis %>% 
+      datatable(rownames = FALSE,
+            filter = 'top',
+            options = list(dom = 'tp'),
+            caption = "Data collected") 
+
+```
+
+# Analysis
+
+```{r}
+
+
+# Plot
+
+ggplotly(
+  ggplot(
+    d_analysis,
+    mapping = aes(x = avg_heart_rate, y = avg_speed_imp, colour = blade_type)
+  ) +
+    geom_point() +
+    geom_smooth(method = lm, se = TRUE) +
+    theme_classic()
+) %>%
+  layout(title = list(
+    text =
+      paste0(
+        'Comparison between Fat and Comp',
+        '<br>',
+        '<sup>',
+        'Speed in meter per second, heart rate in beats per minute',
+        '</sup>'
+      ),
+    # Aligner le titre avec le panel (regarder résultat dans
+    # le document html et pas dans la preview)
+    x = -0.02
+  ))
+
+# Predicts values for a given average heart rate
+
+avg_hr <- 130
+
+# Results COMP
+
+d_analysis_comp <- d_analysis %>% 
+  filter(blade_type == "COMP")
+
+linear_model_comp <- lm(data = d_analysis_comp, formula = avg_speed_imp ~ avg_heart_rate)
+
+val_comp <- predict(linear_model_comp, data.frame(avg_heart_rate = avg_hr))
+
+# Results FAT
+
+d_analysis_fat <- d_analysis %>% 
+  filter(blade_type == "FAT")
+
+linear_model_fat <- lm(data = d_analysis_fat, formula = avg_speed_imp ~ avg_heart_rate)
+
+val_fat <- predict(linear_model_fat, data.frame(avg_heart_rate = avg_hr))
+
+# Compare
+
+val_ratio <- round((val_fat / val_comp - 1) * 100, digits = 1)
+
+
+
+```
+
+Compared to Comp, Fat have been perceived as heavier and less comfortable in the hands of the rower. The data shows that for the same heart rate (130 beat per minute) the predicted speed for Fat would be `r val_ratio` % higher than for comp. This efficiency advantage of Fat over Comp is nevertheless not statistically significant.
+
+# Aknowledgement
+
+Thanks to Dani P. for lending his Fat blades.
+
+# Literature
